@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+
+      - name: Lint (Verilator -Wall)
+        run: make lint
+
+      - name: Build simulators (forwarding on / off)
+        run: make sim
+
+      - name: Directed + benchmark + 300 random programs vs golden model
+        run: make test RANDOM=300 SEED=${{ github.run_number }}
+
+  mutation:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+      - name: Every injected hazard bug must be caught
+        run: python3 tools/mutation_test.py --random 30

@@ -1,0 +1,66 @@
+[*]
+[*] GTKWave save file for the 5-stage RV32I pipeline
+[*]   make wave TEST=forwarding
+[*]   gtkwave build/waves/forwarding.fwd1.vcd sim/pipeline.gtkw
+[*]
+[*] fwd_a / fwd_b:  0 = register file, 1 = EX/MEM, 2 = MEM/WB
+[*]
+[size] 1600 900
+[signals_width] 300
+[sst_expanded] 1
+@28
+TOP.tb_top.clk
+TOP.tb_top.rst
+@200
+-Fetch / Decode
+@22
+TOP.tb_top.u_core.dbg_if_pc[31:0]
+TOP.tb_top.u_core.dbg_id_pc[31:0]
+TOP.tb_top.u_core.dbg_id_insn[31:0]
+@28
+TOP.tb_top.u_core.dbg_id_valid
+@200
+-Hazard unit
+@28
+TOP.tb_top.u_core.stall
+TOP.tb_top.u_core.stall_load_use
+TOP.tb_top.u_core.flush
+@200
+-Execute + forwarding
+@22
+TOP.tb_top.u_core.dbg_ex_pc[31:0]
+TOP.tb_top.u_core.dbg_ex_insn[31:0]
+@28
+TOP.tb_top.u_core.dbg_ex_valid
+@24
+TOP.tb_top.u_core.dbg_ex_rs1[4:0]
+TOP.tb_top.u_core.dbg_ex_rs2[4:0]
+TOP.tb_top.u_core.fwd_a[1:0]
+TOP.tb_top.u_core.fwd_b[1:0]
+@22
+TOP.tb_top.u_core.ex_rs1_val[31:0]
+TOP.tb_top.u_core.ex_rs2_val[31:0]
+TOP.tb_top.u_core.alu_y[31:0]
+@28
+TOP.tb_top.u_core.ex_redirect
+@22
+TOP.tb_top.u_core.ex_target[31:0]
+@200
+-Memory
+@22
+TOP.tb_top.u_core.dbg_mem_pc[31:0]
+@24
+TOP.tb_top.u_core.dbg_mem_rd[4:0]
+@22
+TOP.tb_top.u_core.dbg_mem_result[31:0]
+@200
+-Writeback / retire
+@22
+TOP.tb_top.u_core.dbg_wb_pc[31:0]
+@24
+TOP.tb_top.u_core.dbg_wb_rd[4:0]
+@22
+TOP.tb_top.u_core.wb_data[31:0]
+@28
+TOP.tb_top.retire_valid
+TOP.tb_top.halted
